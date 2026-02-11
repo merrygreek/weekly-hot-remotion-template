@@ -27,6 +27,7 @@ const FrameBackground: React.FC<{ tint?: string }> = ({ tint = '#20242f' }) => {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
+  const sway = Math.sin(frame / 42) * 10;
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#171a21' }}>
@@ -37,7 +38,7 @@ const FrameBackground: React.FC<{ tint?: string }> = ({ tint = '#20242f' }) => {
           backgroundImage:
             'linear-gradient(rgba(255,255,255,0.11) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.11) 1px, transparent 1px)',
           backgroundSize: '95px 95px',
-          transform: `perspective(980px) rotateX(16deg) translateY(${drift}px)`,
+          transform: `perspective(980px) rotateX(16deg) rotateY(${sway * 0.08}deg) translateY(${drift}px) translateX(${sway * 0.9}px)`,
           transformOrigin: 'center',
         }}
       />
@@ -168,9 +169,18 @@ const LibraryScene: React.FC<{ item: LibraryHotItem; total: number }> = ({ item,
       extrapolateRight: 'clamp',
     });
   };
+  const tiltWave = Math.sin(frame / 26);
+  const depthShift = Math.sin(frame / 32) * 8;
 
   return (
-    <AbsoluteFill style={{ fontFamily: 'Arial Black, PingFang SC, sans-serif', color: 'white' }}>
+    <AbsoluteFill
+      style={{
+        fontFamily: 'Arial Black, PingFang SC, sans-serif',
+        color: 'white',
+        perspective: 1700,
+        transformStyle: 'preserve-3d',
+      }}
+    >
       <FrameBackground tint={item.color} />
 
       <div
@@ -185,6 +195,7 @@ const LibraryScene: React.FC<{ item: LibraryHotItem; total: number }> = ({ item,
           background: item.color,
           transform: `translateY(${(1 - panelIn) * 24}px)`,
           opacity: panelIn,
+          boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
         }}
       >
         库介绍 {item.rank}/{total}
@@ -202,7 +213,8 @@ const LibraryScene: React.FC<{ item: LibraryHotItem; total: number }> = ({ item,
           background: 'rgba(8, 12, 18, 0.72)',
           border: `3px solid ${item.color}88`,
           boxShadow: '0 18px 60px rgba(0,0,0,0.35)',
-          transform: `translateY(${(1 - panelIn) * 40}px)`,
+          transform: `translateY(${(1 - panelIn) * 40}px) translateZ(60px) rotateY(${tiltWave * 2.8}deg) rotateX(${(-tiltWave * 1.2).toFixed(3)}deg)`,
+          transformStyle: 'preserve-3d',
           opacity: panelIn,
         }}
       >
@@ -223,8 +235,9 @@ const LibraryScene: React.FC<{ item: LibraryHotItem; total: number }> = ({ item,
           padding: '54px 48px',
           background: 'rgba(2, 6, 12, 0.75)',
           border: '2px solid rgba(255,255,255,0.14)',
-          transform: `translateX(${(1 - rightIn) * 50}px)`,
+          transform: `translateX(${(1 - rightIn) * 50 + depthShift}px) translateZ(25px) rotateY(${(-tiltWave * 3.1).toFixed(3)}deg) rotateX(${(tiltWave * 1.8).toFixed(3)}deg)`,
           opacity: rightIn,
+          boxShadow: '0 14px 48px rgba(0,0,0,0.4)',
         }}
       >
         <div style={{ fontSize: 44, color: '#94a3b8' }}>本周新增 Star</div>
@@ -250,6 +263,32 @@ const LibraryScene: React.FC<{ item: LibraryHotItem; total: number }> = ({ item,
           );
         })}
       </div>
+      <div
+        style={{
+          position: 'absolute',
+          right: 76,
+          top: 120,
+          width: 220,
+          height: 220,
+          borderRadius: 999,
+          border: `2px solid ${item.color}88`,
+          transform: `translateZ(140px) rotateX(64deg) rotateZ(${frame * 0.7}deg)`,
+          opacity: 0.55,
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          left: 56,
+          bottom: 120,
+          width: 180,
+          height: 180,
+          borderRadius: 999,
+          border: '2px solid rgba(255,255,255,0.32)',
+          transform: `translateZ(130px) rotateX(62deg) rotateZ(${-frame * 0.6}deg)`,
+          opacity: 0.3,
+        }}
+      />
     </AbsoluteFill>
   );
 };
