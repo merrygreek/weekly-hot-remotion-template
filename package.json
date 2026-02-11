@@ -1,0 +1,22 @@
+{
+  "name": "r2-remotion-replica",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render src/index.ts HotTopic102 out/hot-topic-102.mp4",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.242"
+  },
+  "devDependencies": {
+    "@remotion/cli": "4.0.242",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "5.8.2"
+  }
+}
