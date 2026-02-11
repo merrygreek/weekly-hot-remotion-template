@@ -9,14 +9,18 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.17.14",
+    "@remotion/three": "^4.0.242",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "remotion": "4.0.242"
+    "remotion": "4.0.242",
+    "three": "^0.160.0"
   },
   "devDependencies": {
     "@remotion/cli": "4.0.242",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.182.0",
     "typescript": "5.8.2"
   }
 }

@@ -5,6 +5,10 @@ import {
   WeeklyHotTemplate,
   getWeeklyTemplateDurationInFrames,
 } from './scenes/WeeklyHotTemplate';
+import {
+  WeeklyHotTemplateTrue3D,
+  getWeeklyTrue3DDurationInFrames,
+} from './scenes/WeeklyHotTemplateTrue3D';
 
 export const RemotionRoot = () => {
   const fps = 30;
@@ -23,6 +27,18 @@ export const RemotionRoot = () => {
         id="WeeklyHotTemplate"
         component={WeeklyHotTemplate}
         durationInFrames={getWeeklyTemplateDurationInFrames(
+          fps,
+          mockWeeklyHotData.libraries.length,
+        )}
+        fps={fps}
+        width={1920}
+        height={1080}
+        defaultProps={mockWeeklyHotData}
+      />
+      <Composition
+        id="WeeklyHotTemplateTrue3D"
+        component={WeeklyHotTemplateTrue3D}
+        durationInFrames={getWeeklyTrue3DDurationInFrames(
           fps,
           mockWeeklyHotData.libraries.length,
         )}
